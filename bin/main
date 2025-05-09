@@ -249,7 +249,7 @@ if __name__ == "__main__":
             )
             logging.info(f"Setting up RUDDER queryable: {key_exp_set_rudder}")
             queryable_set_rudder_angle = session.declare_queryable(
-                key_exp_set_rudder, query_set_rudder_prc, False
+                key_exp_set_rudder, query_set_rudder_prc
             )
 
             # SET RUDDER LISTENER QUERYABLE
@@ -264,7 +264,7 @@ if __name__ == "__main__":
             queryable_set_listener_rudder = session.declare_queryable(
                 key_exp_lister_rudder,
                 query_set_rudder_listener,
-                False,
+                
             )
 
             if args.subscribe:
