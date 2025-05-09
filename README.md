@@ -35,10 +35,10 @@ zenoh network
 ## Start command example  
 
 ```bash
-bin/main -r rise -e boatswain -di /dev/ttyACM0 --log-level 10 
+python bin/main -r rise -e boatswain -di /dev/ttyACM0 --log-level 10 
 
 # Start with active subscription to HW controller 
-python bin/main.py -r rise -e boatswain -di /dev/ttyACM0 --log-level 10 -sub start
+python bin/main -r rise -e boatswain -di /dev/ttyACM0 --log-level 10 -sub start
 ```
 
 ## Truble shooting / Lessons learned  
