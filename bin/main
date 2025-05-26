@@ -351,22 +351,49 @@ if __name__ == "__main__":
 
                     if msg:
                         logging.debug(f"Telemetry message': {msg}")
+                        ingress_timestamp = time.time_ns()
 
-                        # match msg_type:
-                        #     case "VFR_HUD":
-                        #         payload = VFRHUD(
-                        #             airspeed=msg.airspeed,
-                        #             groundspeed=msg.groundspeed,
-                        #             heading=msg.heading,
-                        #             throttle=msg.throttle,
-                        #             alt=msg.alt,
-                        #             climb=msg.climb,
-                        #         )
-                        #         # serialize to bytes
-                        #         serialized_payload = payload.SerializeToString()
-                        #         envelope = keelson.enclose(serialized_payload)
-                        #         pub_vfrhud.put(envelope)
-                        #         logging.info(f"VFR_HUD SENT")
+                        match msg_type:
+                            case "VFR_HUD":
+
+                                # COG
+                                key_exp_cog = keelson.construct_pubsub_key(
+                                    base_path=args.realm,
+                                    entity_id=args.entity_id,
+                                    subject="course_over_ground_deg",
+                                    source_id="mavlink/vfr_hud",
+                                )
+                                payload = TimestampedFloat(value=msg.groundspeed)
+                                payload.timestamp.FromNanoseconds(ingress_timestamp)
+                                serialized_payload = payload.SerializeToString()
+                                envelope = keelson.enclose(serialized_payload)
+                                session.put(key_expr=key_exp_cog, payload=envelope)
+                                logging.info(f"COG SENT:{key_exp_cog}")
+
+                                # Heading
+                                key_exp_heading = keelson.construct_pubsub_key(
+                                    base_path=args.realm,
+                                    entity_id=args.entity_id,
+                                    subject="heading_magnetic_deg",
+                                    source_id="mavlink/vfr_hud",
+                                )
+                                payload = TimestampedFloat(value=msg.heading)
+                                payload.timestamp.FromNanoseconds(ingress_timestamp)
+                                serialized_payload = payload.SerializeToString()
+                                envelope = keelson.enclose(serialized_payload)
+                                session.put(key_expr=key_exp_heading, payload=envelope)
+                                logging.info(f"HEADING SENT:{key_exp_heading}")
+                              
+                                # payload = VFRHUD(
+                                #     airspeed=msg.airspeed,
+                                #     groundspeed=msg.groundspeed,
+                                #     heading=msg.heading,
+                                #     throttle=msg.throttle,
+                                #     alt=msg.alt,
+                                #     climb=msg.climb,
+                                # )
+                           
+                                # logging.info(f"VFR_HUD SENT")
 
                         #     case "RAW_IMU":
                         #         payload = RawIMU(

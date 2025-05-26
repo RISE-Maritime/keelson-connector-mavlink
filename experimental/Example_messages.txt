@@ -1,0 +1,15 @@
+TERY_STATUS {id : 0, battery_function : 0, type : 0, temperature : 32767, voltages : [0, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535], current_battery : 316, current_consumed : 2399, energy_consumed : 0, battery_remaining : 40, time_remaining : 0, charge_state : 1, voltages_ext : [0, 0, 0, 0], mode : 0, fault_bitmask : 0}
+
+
+VFR_HUD {airspeed : 0.0, groundspeed : 0.0, heading : 327, throttle : 0, alt : 0.7999999523162842, climb : -0.0}
+
+
+2025-05-09 12:42:50,788 DEBUG root [353]: Telemetry message': RAW_IMU {time_usec : 2727446585, xacc : -20, yacc : -21, zacc : -1001, xgyro : 0, ygyro : 0, zgyro : 0, xmag : 0, ymag : 0, zmag : 0, id : 0, temperature : 3466}
+2025-05-09 12:42:50,789 DEBUG root [353]: Telemetry message': AHRS {omegaIx : 0.00039887335151433945, omegaIy : -0.00022798158170189708, omegaIz : -3.204977247150964e-06, accel_weight : 0.0, renorm_val : 0.0, error_rp : 9.990078979171813e-05, error_yaw : 1.0}
+2025-05-09 12:42:50,790 DEBUG root [353]: Telemetry message': VIBRATION {time_usec : 2727446900, vibration_x : 0.00766014913097024, vibration_y : 0.007345601450651884, vibration_z : 0.00866465549916029, clipping_0 : 0, clipping_1 : 0, clipping_2 : 0}
+2025-05-09 12:42:50,806 DEBUG root [353]: Telemetry message': BATTERY_STATUS {id : 0, battery_function : 0, type : 0, temperature : 32767, voltages : [0, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535], current_battery : 317, current_consumed : 2400, energy_consumed : 0, battery_remaining : 39, time_remaining : 0, charge_state : 1, voltages_ext : [0, 0, 0, 0], mode : 0, fault_bitmask : 0}
+2025-05-09 12:42:51,026 DEBUG root [353]: Telemetry message': VFR_HUD {airspeed : 0.0, groundspeed : 0.0, heading : 327, throttle : 0, alt : 0.7999999523162842, climb : -0.0}
+2025-05-09 12:42:51,287 DEBUG root [353]: Telemetry message': RAW_IMU {time_usec : 2727946639, xacc : -21, yacc : -21, zacc : -1001, xgyro : 0, ygyro : 0, zgyro : 0, xmag : 0, ymag : 0, zmag : 0, id : 0, temperature : 3466}
+2025-05-09 12:42:51,288 DEBUG root [353]: Telemetry message': AHRS {omegaIx : 0.00039887335151433945, omegaIy : -0.00022798158170189708, omegaIz : -3.204977247150964e-06, accel_weight : 0.0, renorm_val : 0.0, error_rp : 0.00011005575652234256, error_yaw : 1.0}
+2025-05-09 12:42:51,289 DEBUG root [353]: Telemetry message': VIBRATION {time_usec : 2727946994, vibration_x : 0.008744953200221062, vibration_y : 0.008198929019272327, vibration_z : 0.007859370671212673, clipping_0 : 0, clipping_1 : 0, clipping_2 : 0}
+2025-05-09 12:42:51,289 DEBUG root [353]: Telemetry message': BATTERY_STATUS {id : 0, battery_function : 0, type : 0, temperature : 32767, voltages : [0, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535], current_battery : 318, current_consumed : 2400, energy_consumed : 0, battery_remaining : 39, time_remaining : 0, charge_state : 1, voltages_ext : [0, 0, 0, 0], mode : 0, fault_bitmask : 0}

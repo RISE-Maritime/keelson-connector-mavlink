@@ -10,5 +10,5 @@ services:
     privileged: true
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
-    command: "main -r rise -e masslab --device-id /dev/ttyACM0 --log-level 10"
+    command: "main -r rise -e ssrs18 --device-id /dev/ttyACM0 --log-level 10"
     
