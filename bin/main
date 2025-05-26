@@ -353,6 +353,20 @@ if __name__ == "__main__":
                         logging.debug(f"Telemetry message': {msg}")
                         ingress_timestamp = time.time_ns()
 
+                        key_exp_raw_str = keelson.construct_pubsub_key(
+                            base_path=args.realm,
+                            entity_id=args.entity_id,
+                            subject="raw_json",
+                            source_id="mavlink",
+                        )
+                        payload = TimestampedString(value=str(msg))
+                        payload.timestamp.FromNanoseconds(ingress_timestamp)
+                        serialized_payload = payload.SerializeToString()
+                        envelope = keelson.enclose(serialized_payload)
+                        session.put(key_expr=key_exp_raw_str, payload=envelope)
+                        logging.info(f"RAW JSON SENT: {key_exp_raw_str}")
+
+
                         match msg_type:
                             case "VFR_HUD":
 
