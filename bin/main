@@ -34,20 +34,30 @@ def query_set_rudder_prc(query):
     global vehicle
 
     key_exp = str(query.selector)
-    rudder_id = key_exp.split("/")[5]
+    rudder_id = key_exp.split("/")[-1]
     logging.debug(
         f">> [Queryable Rudder] Received Query '{query.selector}' for rudder {rudder_id}"
     )
 
-    values = query.value
-    received_at, enclosed_at, content = keelson.uncover(values.payload)
+    values = query.payload
+    logging.debug(f">> [Queryable ] Received Query '{query.selector}'"
+                        f" with payload: '{query.payload}'")
+
+    # received_at, enclosed_at, content = keelson.uncover(query.payload.to_bytes())
+    received_at, enclosed_at, content = keelson.uncover(query.payload.to_bytes())
     rudder_input = TimestampedFloat.FromString(content)
+    logging.debug(f">> [Queryable Rudder] Received rudder input: {rudder_input.value}")
+    logging.debug(f">> [Queryable Rudder] rudder_id'{rudder_id}'")
 
     if rudder_id == "*":  # Rudder combined
+        # logging.debug(
+        #     f">> [Queryable Rudder] COMBI rudder angle in percentage-100 port 100 starboard '{rudder_input}'"
+        # )
+        # rudder_input = 1200
+        vehicle.set_rudder(rudder_input.value)
         logging.debug(
-            f">> [Queryable Rudder] COMBI rudder angle in percentage-100 port 100 starboard '{rudder_input}'"
+            f">> [Queryable Rudder] COMBI rudder angle in percentage -100 port 100 starboard '{rudder_input}'"
         )
-        vehicle.set_rudder(rudder_input)
         # TODO: Implement rudder control forwarding to MAVlink
 
     elif rudder_id == "0":  # Port rudder
@@ -63,7 +73,7 @@ def query_set_rudder_prc(query):
         # TODO: Implement rudder control forwarding to MAVlink
 
     # TODO: Respond with actual set value
-    query.respond(zenoh.StatusCode.OK, None)
+    query.reply(key_exp, "OK")
 
 
 def query_set_engine_prc(query):
@@ -350,7 +360,7 @@ if __name__ == "__main__":
                     # ['VFR_HUD', 'RAW_IMU', 'AHRS', 'VIBRATION', 'BATTERY_STATUS']
 
                     if msg:
-                        logging.debug(f"Telemetry message': {msg}")
+                        # logging.debug(f"Telemetry message': {msg}")
                         ingress_timestamp = time.time_ns()
 
                         key_exp_raw_str = keelson.construct_pubsub_key(
@@ -364,7 +374,7 @@ if __name__ == "__main__":
                         serialized_payload = payload.SerializeToString()
                         envelope = keelson.enclose(serialized_payload)
                         session.put(key_expr=key_exp_raw_str, payload=envelope)
-                        logging.info(f"RAW JSON SENT: {key_exp_raw_str}")
+                        # logging.info(f"RAW JSON SENT: {key_exp_raw_str}")
 
 
                         match msg_type:
@@ -382,7 +392,7 @@ if __name__ == "__main__":
                                 serialized_payload = payload.SerializeToString()
                                 envelope = keelson.enclose(serialized_payload)
                                 session.put(key_expr=key_exp_cog, payload=envelope)
-                                logging.info(f"COG SENT:{key_exp_cog}")
+                                # logging.info(f"COG SENT:{key_exp_cog}")
 
                                 # Heading
                                 key_exp_heading = keelson.construct_pubsub_key(
@@ -396,17 +406,8 @@ if __name__ == "__main__":
                                 serialized_payload = payload.SerializeToString()
                                 envelope = keelson.enclose(serialized_payload)
                                 session.put(key_expr=key_exp_heading, payload=envelope)
-                                logging.info(f"HEADING SENT:{key_exp_heading}")
-                              
-                                # payload = VFRHUD(
-                                #     airspeed=msg.airspeed,
-                                #     groundspeed=msg.groundspeed,
-                                #     heading=msg.heading,
-                                #     throttle=msg.throttle,
-                                #     alt=msg.alt,
-                                #     climb=msg.climb,
-                                # )
-                           
+                                # logging.info(f"HEADING SENT:{key_exp_heading}")
+                                                        
                                 # logging.info(f"VFR_HUD SENT")
 
                         #     case "RAW_IMU":
